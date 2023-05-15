@@ -1,0 +1,15 @@
+#[Route('/', name: 'home')]
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+
+#[Route('/properties', name: 'properties')]
+properties:
+    path: /properties
+    controller: App\Controller\PropertiesController::index
+
+property:
+    path: /property/{slug}-{id}
+    controller: App\Controller\PropertiesController::show
+

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron text-center">
+        <h1>NurburShop</h1>
+        <p>Welcome to NurburShop, your car dealer at the best price and with your dream car</p>
+    </div>
+
+
+
+    <div class="container mt-5">
+        <h2>Latest</h2>
+        <div class="rox-flex">
+
+            {% for property in properties %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('property', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ property.city }} ({{ property.zipcode }})</p>
+                            <div class="text-primary" style="font-weight: bold; font-size: 2rem">{{ property.formatedPrice}} €</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+{% endblock %}
