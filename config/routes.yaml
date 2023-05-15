@@ -13,3 +13,20 @@ property:
     path: /property/{slug}-{id}
     controller: App\Controller\PropertiesController::show
 
+
+#[Route('/admin/property', name: 'app_admin_property')]
+admin:
+    path: /admin
+    controller: App\Controller\Admin\AdminPropertyController::index
+
+adminNews:
+    path: /admin/create
+    controller: App\Controller\Admin\AdminPropertyController::new
+
+adminProperty:
+    path: /admin/{id}
+    controller: App\Controller\Admin\AdminPropertyController::edit
+
+adminDelete:
+    path: /admin/delete/{id}
+    controller: App\Controller\Admin\AdminPropertyController::delete

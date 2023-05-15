@@ -58,6 +58,9 @@ class Property
         $this->created_at = new \DateTimeImmutable();
     }
 
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,7 +78,7 @@ class Property
         return $this;
     }
 
-    public function getSlug()
+    public function getSlug(): string
     {
         return (new Slugify())->slugify($this->title);
     }
@@ -104,7 +107,7 @@ class Property
         return $this;
     }
 
-    public function getRooms(): ?int
+    public function getRooms(): int
     {
         return $this->rooms;
     }
@@ -116,7 +119,7 @@ class Property
         return $this;
     }
 
-    public function getBedrooms(): ?int
+    public function getBedrooms(): int
     {
         return $this->bedrooms;
     }

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title  %}{% endblock %}
+
+{% block body %}
+
+
+    <div class="container mt-5">
+
+        <h1>Manage Property</h1>
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for property in properties %}
+
+                <tr>
+                    <td>{{ property.title }}</td>
+                    <td>
+                        <a href="{{ path('adminProperty', {id: property.id}) }}" class="btn btn-secondary">Edit</a>
+
+                        <form method="post" action="{{ path('adminDelete', {id: property.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ property.id) }}">
+                            <button class="btn btn-danger mt-1">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('adminNews') }}" class="btn btn-primary">Create</a>
+        </div>
+    </div>
+
+
+{% endblock %}
