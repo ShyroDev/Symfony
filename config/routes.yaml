@@ -30,3 +30,11 @@ adminProperty:
 adminDelete:
     path: /admin/delete/{id}
     controller: App\Controller\Admin\AdminPropertyController::delete
+
+#[Route('/security', name: 'app_security')]
+login:
+    path: /login
+    controller:  App\Controller\Admin\SecurityController::login
+
+logout:
+    path: /logout

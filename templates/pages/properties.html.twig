@@ -1,14 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PropertiesController!{% endblock %}
+{% block title %}Shop{% endblock %}
 
 {% block body %}
 
 <div class="jumbotron text-center">
 
-    <h1>NurburShop</h1>
-
+    <h1>Shop</h1>
     <p>Here you can find all your dream.</p>
 
+    <div class="container mt-4">
+
+        <div class="row">
+
+            {{ form_start(form) }}
+
+            <div class="col mt-4">
+
+                <div class="form-row row">
+                    <div class="col-md-4">
+                        {{ form_row(form.maxPrice) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.minSurface) }}
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary">Research</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container mt-4">
+
+    <div class="row">
+
+        {% for property in properties %}
+
+            <div class="col-md-4 mt-4">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        {% if property.imageName %}
+
+                            <img src="{{ vich_uploader_asset(property, 'imageFile')}}" alt="card-img-top" style="width: 100%; height: auto">
+
+                            {% else %}
+
+                                <img src="{{ asset('/images/properties/empty.jpg') }}" alt="card-img-top" style="width: 100%; height: auto">
+
+                        {% endif %}
+
+
+                        <h5 class="card-title">
+                            <a href="{{ path('property', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
+                        </h5>
+                        <p class="card-text">{{ property.surface }} m² - {{ property.city }} ({{ property.zipcode }})</p>
+                        <div class="text-primary" style="font-weight: bold; font-size: 2rem">{{ property.formatedPrice}} €</div>
+                    </div>
+
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+
+    </div>
+
+
+    <div class="pagination mt-4">
+        {{ knp_pagination_render(properties) }}
+    </div>
+
+
+
+</div
 
 {% endblock %}

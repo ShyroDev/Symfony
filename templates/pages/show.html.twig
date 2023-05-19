@@ -11,6 +11,16 @@
             <div class="row">
                 <div class="col col-md-8">
 
+                    {% if properties.imageName %}
+
+                        <img src="{{ vich_uploader_asset(properties, 'imageFile')}}" alt="card-img-top" style="width: 800px; height: 530px">
+
+                    {% else %}
+
+                        <img src="{{ asset('/images/properties/empty.jpg') }}" alt="card-img-top" style="width: 800px; height: 530px">
+
+                    {% endif %}
+
                 </div>
                 <div class="col md-4">
                     <h1>{{ properties.title }}</h1>

@@ -3,11 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\PropertyRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
+#[Vich\Uploadable]
+
 class Property
 {
 
@@ -16,6 +23,14 @@ class Property
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Vich\UploadableField(mapping: 'property_image', fileNameProperty: 'imageName')]
+    private File $imageFile;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $imageName;
+
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -23,6 +38,7 @@ class Property
     private ?string $description;
 
     #[ORM\Column]
+    #[Assert\Range(min: 10, max: 400)]
     private ?int $surface;
 
     #[ORM\Column]
@@ -44,18 +60,22 @@ class Property
     private ?string $adress;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^[0-9]{5}$/')]
     private ?string $zipcode;
 
     #[ORM\Column]
     private ?bool $sold = false;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at;
+    private \DateTimeImmutable $created_at;
+
+    #[ORM\Column]
+    private \DateTime|null $start_at = null;
 
 
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable();
+        $this->created_at = new DateTimeImmutable();
     }
 
 
@@ -219,4 +239,54 @@ class Property
 
         return $this;
     }
+
+    /**
+     * @return File
+     */
+    public function getImageFile(): File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Property
+     */
+    public function setImageFile(?File $imageFile = null): Property
+    {
+
+        $this->imageFile = $imageFile;
+
+        if ($this->imageFile instanceof UploadedFile)
+        {
+            $this->start_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->start_at;
+    }
+
+    public function setUpdatedAt(\DateTime $start_at): self
+    {
+        $this->start_at = $start_at;
+
+        return $this;
+    }
+
 }
