@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PropertyRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
@@ -72,10 +74,13 @@ class Property
     #[ORM\Column]
     private \DateTime|null $start_at = null;
 
+    #[ORM\OneToMany(mappedBy: 'idProperty', targetEntity: Proprietaire::class)]
+    private Collection $proprietary;
 
     public function __construct()
     {
         $this->created_at = new DateTimeImmutable();
+        $this->proprietary = new ArrayCollection();
     }
 
 
@@ -285,6 +290,41 @@ class Property
     public function setUpdatedAt(\DateTime $start_at): self
     {
         $this->start_at = $start_at;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @return Collection<int, Proprietaire>
+     */
+    public function getProprietary(): Collection
+    {
+        return $this->proprietary;
+    }
+
+    public function addProprietary(Proprietaire $proprietary): self
+    {
+        if (!$this->proprietary->contains($proprietary))
+        {
+            $this->proprietary->add($proprietary);
+            $proprietary->setIdProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProprietary(Proprietaire $proprietary): self
+    {
+        if ($this->proprietary->removeElement($proprietary))
+        {
+            if ($proprietary->getIdProperty() === $this)
+            {
+                $proprietary->setIdProperty(null);
+            }
+        }
 
         return $this;
     }

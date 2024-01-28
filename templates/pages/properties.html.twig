@@ -52,7 +52,7 @@
 
                     <div class="card-body">
 
-                        {% if property.imageName %}
+                        {% if property.imagename %}
 
                             <img src="{{ vich_uploader_asset(property, 'imageFile')}}" alt="card-img-top" style="width: 100%; height: auto">
 
@@ -67,7 +67,7 @@
                             <a href="{{ path('property', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
                         </h5>
                         <p class="card-text">{{ property.surface }} m² - {{ property.city }} ({{ property.zipcode }})</p>
-                        <div class="text-primary" style="font-weight: bold; font-size: 2rem">{{ property.formatedPrice}} €</div>
+                        <div class="text-primary" style="font-weight: bold; font-size: 2rem">{{ property.formatedprice}} €</div>
                     </div>
 
                 </div>

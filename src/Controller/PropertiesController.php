@@ -66,10 +66,11 @@ class PropertiesController extends AbstractController
             ], 301);
         }
 
-
+        $proprietary = $property->getProprietary();
 
         return $this->render('pages/show.html.twig',
         [
+            'proprietarys' => $proprietary,
             'properties' => $property,
             'current_menu' => 'properties'
         ]);

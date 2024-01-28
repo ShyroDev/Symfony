@@ -35,6 +35,8 @@
 
     <div class="container mt-5">
 
+
+
         <p>
             {{ properties.description | nl2br }}
         </p>
@@ -45,6 +47,12 @@
                 <div class="col-md-8">
                     <h2>Characteristic</h2>
                     <table class="table table-striped">
+                        <tr>
+                            <td>Proprietaries</td>
+                            {% for proprietary in proprietarys %}
+                                <td>{{ proprietary.name }}.{{ proprietary.surname }}</td>
+                            {% endfor %}
+                        </tr>
                         <tr>
                             <td>Surface</td>
                             <td>{{ properties.surface }} m²</td>
